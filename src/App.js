@@ -1,6 +1,7 @@
 import { Console } from '@woowacourse/mission-utils';
 import Parser from './Parser.js';
 import Product from './Model/Product.js';
+import OutputView from './View/OutputView.js';
 
 class App {
   async run() {
@@ -16,8 +17,6 @@ class App {
       (x) => !noPromoProductList.includes(x),
     );
 
-    // parsedProduct.map(product => )s
-    // parsedProduct.filter();
     const products = [];
     parsedProduct.forEach(([name, price, quantity, promotion]) => {
       products.push(new Product(name, price, quantity, promotion));
@@ -26,7 +25,7 @@ class App {
       }
     });
 
-    products.forEach((product) => console.log(product.toString()));
+    OutputView.displayProducts(products);
   }
 }
 
