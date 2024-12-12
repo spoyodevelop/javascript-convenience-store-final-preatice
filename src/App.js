@@ -1,9 +1,9 @@
 import { Console } from '@woowacourse/mission-utils';
-import fs from 'fs';
+import Parser from './parser.js';
 
 class App {
   async run() {
-    const product = fs.readFileSync('public/promotions.md', 'utf8');
+    console.log(new Parser('public/products.md').parsedArray);
   }
 }
 
