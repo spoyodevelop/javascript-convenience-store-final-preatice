@@ -33,7 +33,7 @@ class Promotion {
     return this.#buy + 1;
   }
 
-  getRemainder(quantity) {
+  isFreeAvailable(quantity) {
     return (quantity + 1) % (this.#buy + 1) === 0;
   }
 

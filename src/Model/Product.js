@@ -32,12 +32,20 @@ class Product {
     return this.#promotion.buyAmount;
   }
 
-  getRemainder(quantity) {
-    return this.#promotion.getRemainder(quantity);
+  get price() {
+    return this.#price;
+  }
+
+  isFreeAvailable(quantity) {
+    return this.#promotion.isFreeAvailable(quantity);
   }
 
   getFreebie(quantity) {
     return this.#promotion.getFreebie(quantity);
+  }
+
+  sellProduct(quantity) {
+    this.#quantity -= quantity;
   }
 
   toString() {

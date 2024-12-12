@@ -11,9 +11,9 @@ class App {
     OutputView.displayProducts(products);
     const shoppingCart = await InputView.getShoppingCart(products);
 
-    shoppingCart.forEach((shoppingItem) =>
-      ProductSeller(shoppingItem, products),
-    );
+    for (const shoppingItem of shoppingCart) {
+      await ProductSeller(shoppingItem, products);
+    }
   }
 }
 
