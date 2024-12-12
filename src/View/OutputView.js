@@ -13,8 +13,43 @@ const OutputView = {
 
     products.forEach((product) => this.printMessage(product.toString()));
   },
-  displayWinningMessage() {
-    this.printMessage('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
+  displayEachOneBill(eachBill) {
+    this.printMessage('==============W 편의점================');
+    this.printMessage('상품명     수량     금액');
+    eachBill.forEach(({ name, quantity, price }) => {
+      this.printMessage(
+        `${name}     ${quantity}      ${price.toLocaleString()}`,
+      );
+    });
+  },
+
+  displayFreebie(freebieBill) {
+    this.printMessage('=============증 정===============');
+    freebieBill.forEach(({ freebie, name }) => {
+      this.printMessage(`${name}     ${freebie}`);
+    });
+  },
+
+  displayTotal({
+    totalBeforeDiscount,
+    totalQuantity,
+    promoDiscount,
+    membershipDiscount,
+    total,
+  }) {
+    this.printMessage('====================================');
+    this.printMessage(
+      `총구매액            ${totalQuantity}     ${totalBeforeDiscount.toLocaleString()}`,
+    );
+    this.printMessage(
+      `행사할인                       -${promoDiscount.toLocaleString()}`,
+    );
+    this.printMessage(
+      `맴버쉽할인                     -${membershipDiscount.toLocaleString()}`,
+    );
+    this.printMessage(
+      `내실돈                            ${total.toLocaleString()}`,
+    );
   },
 };
 
