@@ -1,7 +1,7 @@
 import { Console } from '@woowacourse/mission-utils';
 
-import validateRetry from '../Validation/validateRetry.js';
 import validateShoppingCart from '../Validation/validateShoppingCart.js';
+import validateUserAgree from '../Validation/validateUserAgree.js';
 
 const InputView = {
   async getShoppingCart(products) {
@@ -13,13 +13,11 @@ const InputView = {
       if (shoppingCart) return shoppingCart;
     }
   },
-  async getValidRetry() {
-    const input = await Console.readLineAsync(
-      '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.',
-    );
-    const retry = validateRetry(input);
+  async askUserAgree(message) {
+    const input = await Console.readLineAsync(message);
+    const userAgree = validateUserAgree(input);
 
-    return retry;
+    return userAgree;
   },
 };
 
