@@ -24,6 +24,22 @@ class Product {
     return this.#quantity;
   }
 
+  get promotion() {
+    return this.#promotion.name;
+  }
+
+  get buyAmount() {
+    return this.#promotion.buyAmount;
+  }
+
+  getRemainder(quantity) {
+    return this.#promotion.getRemainder(quantity);
+  }
+
+  getFreebie(quantity) {
+    return this.#promotion.getFreebie(quantity);
+  }
+
   toString() {
     let disPlayPromo = this.#promotion.name;
     let disPlayQuantity = `${this.#quantity}개`;

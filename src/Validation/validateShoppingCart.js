@@ -15,7 +15,7 @@ function checkAvailableQuantity(name, quantity, products) {
     .map((product) => product.quantity)
     .reduce((partialSum, a) => partialSum + a, 0);
 
-  return allAvailableQuantity > quantity;
+  return allAvailableQuantity >= quantity;
 }
 export default function validateShoppingCart(inputString, products) {
   let parseString = inputString;
@@ -36,7 +36,7 @@ export default function validateShoppingCart(inputString, products) {
   // eslint-disable-next-line
   for (const shoppingItem of shoppingCart) {
     const [itemName, quantity] = shoppingItem;
-    if (Number.isNaN(Number(quantity)) || Number(quantity) < 0) {
+    if (Number.isNaN(Number(quantity)) || Number(quantity) <= 0) {
       OutputView.printMessage(
         '[ERROR] 숫자가 올바르지 않습니다. 음수는 입력되지 않습니다.',
       );

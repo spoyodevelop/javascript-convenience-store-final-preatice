@@ -29,6 +29,18 @@ class Promotion {
     }
   }
 
+  get buyAmount() {
+    return this.#buy + 1;
+  }
+
+  getRemainder(quantity) {
+    return (quantity + 1) % (this.#buy + 1) === 0;
+  }
+
+  getFreebie(quantity) {
+    return Math.floor(quantity / (this.#buy + 1));
+  }
+
   get name() {
     return this.#name;
   }
