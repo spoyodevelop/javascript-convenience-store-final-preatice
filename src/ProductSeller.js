@@ -31,7 +31,7 @@ export default async function ProductSeller(shoppingItem, products) {
     (product) => product.promotion === 'noPromo',
   );
   const promoQuantity = promoProduct?.quantity ?? 0;
-  const nonPromoQuantity = nonPromoProduct.quantity;
+  const nonPromoQuantity = nonPromoProduct.quantity ?? 0;
 
   let promoSellingQuantity = Math.min(quantity, promoQuantity);
 
@@ -41,15 +41,19 @@ export default async function ProductSeller(shoppingItem, products) {
   );
 
   if (
-    promoProduct.isFreeAvailable(promoSellingQuantity) &&
+    promoProduct?.isFreeAvailable(promoSellingQuantity) &&
     promoQuantity > promoSellingQuantity + 1
   ) {
     if (await checkUserAgree(itemName)) promoSellingQuantity += 1;
   }
-  let promoProductLeftovers = promoSellingQuantity % promoProduct.buyAmount;
+  let promoProductLeftovers = 0;
+
+  if (promoSellingQuantity)
+    promoProductLeftovers = promoSellingQuantity % promoProduct?.buyAmount;
+
   if (
-    promoQuantity + nonPromoQuantity > promoProduct.buyAmount &&
-    nonPromoSellingQuantity + promoProductLeftovers > promoProduct.buyAmount
+    promoQuantity + nonPromoQuantity > promoProduct?.buyAmount &&
+    nonPromoSellingQuantity + promoProductLeftovers >= promoProduct?.buyAmount
   ) {
     if (
       !(await checkUserAgreeForBuyNonPromo(
@@ -70,9 +74,10 @@ export default async function ProductSeller(shoppingItem, products) {
   if (nonPromoSellingQuantity > 0) {
     nonPromoProduct.sellProduct(nonPromoSellingQuantity);
   }
+
   return {
     name: itemName,
-    leftovers: promoProductLeftovers,
+    leftovers: promoProductLeftovers ?? 0,
     promoSellQuantity: promoSellingQuantity - promoProductLeftovers,
     nonPromoSellingQuantity,
     price: nonPromoProduct.price,
