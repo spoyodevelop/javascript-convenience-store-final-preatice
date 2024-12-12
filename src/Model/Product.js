@@ -16,6 +16,14 @@ class Product {
     this.#promotion = new Promotion(promotion);
   }
 
+  get name() {
+    return this.#name;
+  }
+
+  get quantity() {
+    return this.#quantity;
+  }
+
   toString() {
     let disPlayPromo = this.#promotion.name;
     let disPlayQuantity = `${this.#quantity}개`;

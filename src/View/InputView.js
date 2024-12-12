@@ -1,13 +1,17 @@
 import { Console } from '@woowacourse/mission-utils';
-import validateNumber from '../Validation/validateNumber.js';
+
 import validateRetry from '../Validation/validateRetry.js';
+import validateShoppingCart from '../Validation/validateShoppingCart.js';
 
 const InputView = {
-  async getValidNumber() {
-    const input = await Console.readLineAsync('숫자를 입력해주세요 : ');
-    const number = validateNumber(input);
-
-    return number;
+  async getShoppingCart(products) {
+    while (true) {
+      const input = await Console.readLineAsync(
+        '구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])',
+      );
+      const shoppingCart = validateShoppingCart(input, products);
+      if (shoppingCart) return shoppingCart;
+    }
   },
   async getValidRetry() {
     const input = await Console.readLineAsync(

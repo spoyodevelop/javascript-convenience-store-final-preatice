@@ -2,6 +2,7 @@ import { Console } from '@woowacourse/mission-utils';
 import Parser from './Parser.js';
 import Product from './Model/Product.js';
 import OutputView from './View/OutputView.js';
+import InputView from './View/InputView.js';
 
 class App {
   async run() {
@@ -25,7 +26,9 @@ class App {
       }
     });
 
-    OutputView.displayProducts(products);
+    // OutputView.displayProducts(products);
+    const input = await InputView.getShoppingCart(products);
+    console.log(input);
   }
 }
 
