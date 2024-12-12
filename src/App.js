@@ -15,8 +15,9 @@ class App {
     for (const shoppingItem of shoppingCart) {
       bills.push(await ProductSeller(shoppingItem, products));
     }
-    const eachOne = new BillProcessor().processEachOne(bills);
-    console.log(eachOne);
+    const billProcessor = new BillProcessor();
+    const eachOne = billProcessor.processEachOne(bills);
+    const freebieBill = billProcessor.processFreebie(bills);
   }
 }
 

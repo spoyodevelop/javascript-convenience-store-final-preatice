@@ -15,6 +15,14 @@ class BillProcessor {
       }),
     );
   }
-  processAll()
+
+  processFreebie(bills) {
+    return bills
+      .filter(({ freebie }) => freebie > 0)
+      .map(({ name, freebie }) => ({
+        name,
+        freebie,
+      }));
+  }
 }
 export default BillProcessor;
