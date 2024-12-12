@@ -14,9 +14,7 @@ const InputView = {
     }
   },
   async askUserAgree(message) {
-    const input = await Console.readLineAsync(message);
-    const userAgree = validateUserAgree(input);
-
+    const userAgree = validateUserAgree(message);
     return userAgree;
   },
 };
