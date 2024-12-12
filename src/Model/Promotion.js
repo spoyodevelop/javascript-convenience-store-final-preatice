@@ -41,6 +41,10 @@ class Promotion {
     return Math.floor(quantity / (this.#buy + 1));
   }
 
+  isAvailableOffer(date) {
+    return this.#startDate <= date && this.#endDate >= date;
+  }
+
   get name() {
     return this.#name;
   }

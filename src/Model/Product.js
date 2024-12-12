@@ -36,6 +36,10 @@ class Product {
     return this.#price;
   }
 
+  isAvailableOffer(date) {
+    return this.#promotion.isAvailableOffer(date);
+  }
+
   isFreeAvailable(quantity) {
     return this.#promotion.isFreeAvailable(quantity);
   }

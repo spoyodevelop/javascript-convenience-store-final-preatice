@@ -1,3 +1,4 @@
+import { DateTimes } from '@woowacourse/mission-utils';
 import InputView from './View/InputView.js';
 
 function getNonPromoSellingQuantity(promoSellingQuantity, quantity) {
@@ -18,7 +19,46 @@ async function checkUserAgreeForBuyNonPromo(itemName, quantity) {
   );
   return userAgree;
 }
-export default async function ProductSeller(shoppingItem, products) {
+
+async function expiredProductSeller(shoppingItem, products) {
+  const { itemName, quantity } = shoppingItem;
+
+  const filteredProduct = products.filter(
+    (product) => product.name === itemName,
+  );
+  const promoProduct = filteredProduct.find(
+    (product) => product.promotion !== 'noPromo',
+  );
+  const nonPromoProduct = filteredProduct.find(
+    (product) => product.promotion === 'noPromo',
+  );
+  const promoQuantity = promoProduct?.quantity ?? 0;
+  const nonPromoQuantity = nonPromoProduct.quantity ?? 0;
+
+  const promoSellingQuantity = Math.min(quantity, promoQuantity);
+
+  const nonPromoSellingQuantity = getNonPromoSellingQuantity(
+    promoSellingQuantity,
+    quantity,
+  );
+
+  if (promoSellingQuantity > 0) {
+    promoProduct.sellProduct(promoSellingQuantity);
+  }
+  if (nonPromoSellingQuantity > 0) {
+    nonPromoProduct.sellProduct(nonPromoSellingQuantity);
+  }
+
+  return {
+    name: itemName,
+    leftovers: 0,
+    promoSellQuantity: 0,
+    nonPromoSellingQuantity: promoSellingQuantity + nonPromoSellingQuantity,
+    price: nonPromoProduct.price,
+    freebie: 0,
+  };
+}
+async function promoProductSeller(shoppingItem, products) {
   const { itemName, quantity } = shoppingItem;
 
   const filteredProduct = products.filter(
@@ -83,4 +123,19 @@ export default async function ProductSeller(shoppingItem, products) {
     price: nonPromoProduct.price,
     freebie,
   };
+}
+export default async function productSeller(shoppingItem, products) {
+  const { itemName, quantity } = shoppingItem;
+  const filteredProduct = products.filter(
+    (product) => product.name === itemName,
+  );
+  const promoProduct = filteredProduct.find(
+    (product) => product.promotion !== 'noPromo',
+  );
+  let available = true;
+  if (promoProduct) {
+    available = promoProduct.isAvailableOffer(new DateTimes());
+  }
+  if (available) return promoProductSeller(shoppingItem, products);
+  return expiredProductSeller(shoppingItem, products);
 }

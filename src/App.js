@@ -1,7 +1,7 @@
 import OutputView from './View/OutputView.js';
 import InputView from './View/InputView.js';
 import ProductMaker from './ProductMaker.js';
-import ProductSeller from './ProductSeller.js';
+import productSeller from './ProductSeller.js';
 import BillProcessor from './BillProcessor.js';
 
 class App {
@@ -14,7 +14,9 @@ class App {
 
       const bills = [];
       for (const shoppingItem of shoppingCart) {
-        bills.push(await ProductSeller(shoppingItem, products));
+        const bill = await productSeller(shoppingItem, products);
+        console.log(bill);
+        bills.push(bill);
       }
       const membership = await InputView.askUserAgree(
         '맴버쉽 할인을 받으시겠습니까? (Y/N)',
